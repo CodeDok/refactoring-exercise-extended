@@ -1,105 +1,96 @@
-package com.acme.interviews;
+package dev.codedok;
+import com.opencsv.exceptions.CsvValidationException;
+import org.junit.jupiter.api.Test;
+
 import java.util.*;
 import java.io.IOException;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Unit test for simple App.
  */
 public class FundingRaisedTest
-    extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public FundingRaisedTest ( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( FundingRaisedTest.class );
-    }
 
     /**
      * Rigourous Test :-)
      */
+    @Test
     public void testWhereGivenCompany() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
             options.put("company_name", "Facebook");
             assertEquals(FundingRaised.where(options).size(), 7);
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testWhereGivenCity() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
             options.put("city", "Tempe");
             assertEquals(FundingRaised.where(options).size(), 3);
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testWhereGivenState() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
             options.put("state", "CA");
             assertEquals(FundingRaised.where(options).size(), 873);
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testWhereGivenRound() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
             options.put("round", "a");
             assertEquals(FundingRaised.where(options).size(), 582);
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testMultipleOptions() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
             options.put("round", "a");
             options.put("company_name", "Facebook");
             assertEquals(FundingRaised.where(options).size(), 1);
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testWhereNotExists() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
             options.put("company_name", "NotFacebook");
             assertEquals(FundingRaised.where(options).size(), 0);
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testWhereCorrectKeys() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
@@ -115,12 +106,13 @@ public class FundingRaisedTest
             assertEquals(row.get("funded_date"), "1-Sep-04");
             assertEquals(row.get("raised_amount"), "500000");
             assertEquals(row.get("round"), "angel");
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
     }
 
+    @Test
     public void testFindByGivenCompanyName() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
@@ -136,7 +128,7 @@ public class FundingRaisedTest
             assertEquals(row.get("funded_date"), "1-Sep-04");
             assertEquals(row.get("raised_amount"), "500000");
             assertEquals(row.get("round"), "angel");
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         } catch(NoSuchEntryException e) {
@@ -145,6 +137,7 @@ public class FundingRaisedTest
         }
     }
 
+    @Test
     public void testFindByGivenState() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
@@ -160,7 +153,7 @@ public class FundingRaisedTest
             assertEquals(row.get("funded_date"), "1-Dec-06");
             assertEquals(row.get("raised_amount"), "8500000");
             assertEquals(row.get("round"), "b");
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         } catch(NoSuchEntryException e) {
@@ -169,6 +162,7 @@ public class FundingRaisedTest
         }
     }
 
+    @Test
     public void testFindByMultipleOptions() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
@@ -185,7 +179,7 @@ public class FundingRaisedTest
             assertEquals(row.get("funded_date"), "1-Oct-07");
             assertEquals(row.get("raised_amount"), "300000000");
             assertEquals(row.get("round"), "c");
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         } catch(NoSuchEntryException e) {
@@ -194,6 +188,7 @@ public class FundingRaisedTest
         }
     }
 
+    @Test
     public void testFindByNotExists() {
         try {
             Map<String, String> options = new HashMap<String, String> ();
@@ -201,7 +196,7 @@ public class FundingRaisedTest
             options.put("round", "c");
             Map<String, String> row = FundingRaised.findBy(options);
             fail("findBy should throw exception");
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         } catch(NoSuchEntryException e) {

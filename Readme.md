@@ -1,4 +1,10 @@
-## Refactoring Exercise
+Extended version of lamchau's refactoring exercise for java with a few more codesmells, antipattern 
+and so on. 
+
+Uses Maven and upgraded to Junit5.
+
+
+## Refactoring Exercise (Original)
 
 ### Goal
 Here's some really bad code!  It is (intentionally) bad, with lots of

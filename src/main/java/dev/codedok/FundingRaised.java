@@ -1,12 +1,14 @@
-package com.acme.interviews;
+package dev.codedok;
 
 import java.util.*;
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+
 import java.io.FileReader;
 import java.io.IOException;
 
 public class FundingRaised {
-    public static List<Map<String, String>> where(Map<String, String> options) throws IOException {
+    public static List<Map<String, String>> where(Map<String, String> options) throws IOException, CsvValidationException {
         List<String[]> csvData = new ArrayList<String[]>();
         CSVReader reader = new CSVReader(new FileReader("startup_funding.csv"));
         String[] row = null;
@@ -82,7 +84,7 @@ public class FundingRaised {
         return output;
     }
 
-    public static Map<String, String> findBy(Map<String, String> options) throws IOException, NoSuchEntryException {
+    public static Map<String, String> findBy(Map<String, String> options) throws IOException, NoSuchEntryException, CsvValidationException {
         List<String[]> csvData = new ArrayList<String[]>();
         CSVReader reader = new CSVReader(new FileReader("startup_funding.csv"));
         String[] row = null;
@@ -176,7 +178,7 @@ public class FundingRaised {
             options.put("company_name", "Facebook");
             options.put("round", "a");
             System.out.print(FundingRaised.where(options).size());
-        } catch(IOException e) {
+        } catch(IOException | CsvValidationException e) {
             System.out.print(e.getMessage());
             System.out.print("error");
         }
